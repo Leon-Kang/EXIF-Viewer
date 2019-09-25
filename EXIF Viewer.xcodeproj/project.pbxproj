@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		35A04950233B113B00F768A6 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0494F233B113B00F768A6 /* InfoTableViewCell.swift */; };
 		6B8491BB233A5ADE00B9D281 /* AlbumsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8491B9233A5ADE00B9D281 /* AlbumsTableViewCell.swift */; };
 		6B8491BC233A5ADE00B9D281 /* AlbumsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8491BA233A5ADE00B9D281 /* AlbumsTableViewCell.xib */; };
 		6B8491BE233A5E7D00B9D281 /* AppPermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8491BD233A5E7C00B9D281 /* AppPermissionManager.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		35A0494F233B113B00F768A6 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
 		6B8491B9233A5ADE00B9D281 /* AlbumsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewCell.swift; sourceTree = "<group>"; };
 		6B8491BA233A5ADE00B9D281 /* AlbumsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlbumsTableViewCell.xib; sourceTree = "<group>"; };
 		6B8491BD233A5E7C00B9D281 /* AppPermissionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppPermissionManager.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				6B8491B9233A5ADE00B9D281 /* AlbumsTableViewCell.swift */,
 				6B8491BA233A5ADE00B9D281 /* AlbumsTableViewCell.xib */,
 				6B8491BD233A5E7C00B9D281 /* AppPermissionManager.swift */,
+				35A0494F233B113B00F768A6 /* InfoTableViewCell.swift */,
 				6BFBA4F3233A48CD00DDE80E /* Main.storyboard */,
 				6BFBA4F6233A48D000DDE80E /* Assets.xcassets */,
 				6BFBA4F8233A48D000DDE80E /* LaunchScreen.storyboard */,
@@ -164,6 +167,7 @@
 				6BFBA4F2233A48CD00DDE80E /* ViewController.swift in Sources */,
 				6BFBA505233A4B5900DDE80E /* PhotoCollectionViewCell.swift in Sources */,
 				6B8491BE233A5E7D00B9D281 /* AppPermissionManager.swift in Sources */,
+				35A04950233B113B00F768A6 /* InfoTableViewCell.swift in Sources */,
 				6BFBA4EE233A48CD00DDE80E /* AppDelegate.swift in Sources */,
 				6BFBA508233A580400DDE80E /* PhotosCollectionViewController.swift in Sources */,
 				6BFBA502233A49D300DDE80E /* ExifInfoViewController.swift in Sources */,

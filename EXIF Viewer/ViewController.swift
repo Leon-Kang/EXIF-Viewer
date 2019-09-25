@@ -40,6 +40,11 @@ class ViewController: UIViewController {
     
     let photosCollectionView = UIStoryboard.viewController(.main, identifier: kPhotosCollectionViewIdentifier) as! PhotosCollectionViewController
     
+    let infoViewController = UIStoryboard.viewController(.main, identifier: kInfoViewControllerIdentifier) as! PhotosCollectionViewController
+
+    
+    
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -50,11 +55,11 @@ class ViewController: UIViewController {
         
         AppPermissionManager.shared.checkPhotoLib { (success) in
             if success {
-                self.collections = self.allAlbumCollection()
-                self.getAlbumCovers { (albums) in
-                    self.albums = albums
-                    self.tableView.reloadData()
-                }
+//                self.collections = self.allAlbumCollection()
+//                self.getAlbumCovers { (albums) in
+//                    self.albums = albums
+//                    self.tableView.reloadData()
+//                }
                 
             }
         }
@@ -166,7 +171,9 @@ class ViewController: UIViewController {
             }
         }
     }
-
+    
+    
+    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -182,7 +189,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return albums.count
+        return 0
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
