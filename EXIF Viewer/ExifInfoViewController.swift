@@ -40,9 +40,11 @@ class ExifInfoViewController: UIViewController {
     @IBAction func openPhotoLib(_ sender: Any) {
         AppPermissionManager.shared.checkPhotoLib { (result) in
             if result == true {
-                self.imagePicker.delegate = self
-                self.imagePicker.sourceType = .photoLibrary
-                self.present(self.imagePicker, animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    self.imagePicker.delegate = self
+                    self.imagePicker.sourceType = .photoLibrary
+                    self.present(self.imagePicker, animated: true, completion: nil)
+                }
             }
         }
     }
@@ -52,14 +54,36 @@ class ExifInfoViewController: UIViewController {
 extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let asset = info[.phAsset] as? PHAsset {
+            asset.requestContentEditingInput(with: nil) { (input, result) in
+                if let url = input?.fullSizeImageURL {
+                    let image = CIImage(contentsOf: url)
+                    if let metaData = image?.properties {
+                        self.dataSource = flattenDictionary(dic: metaData)
+                        let sorted = self.dataSource.sorted { (value1, value2) -> Bool in
+                            return value1.key < value2.key
+                        }
+                        self.dataSource = Dictionary()
+                        for (key, value) in sorted {
+                            self.dataSource[key] = value
+                        }
+                        self.updateUI()
+                    }
+                    
+                }
+                
+            }
+        }
+        
         if let image = info[.originalImage] as? UIImage, let data = image.jpegData(compressionQuality: 1.0) {
             self.image = image
             
             guard let source = CGImageSourceCreateWithData(data as CFData, nil) else { return }
             guard let metaData = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? Dictionary<String, Any> else { return }
-            dataSource = flattenDictionary(dic: NSDictionary(dictionary: metaData) as! [String : Any])
-            
-            updateUI()
+//            dataSource = flattenDictionary(dic: NSDictionary(dictionary: metaData) as! [String : Any])
+//
+//            updateUI()
         }
         picker.dismiss(animated: true, completion: nil)
     }
@@ -102,34 +126,34 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 func flattenDictionary(dic: [String: Any], keepLevel: UInt = UInt.max) -> [String: Any] {
-  var result: [String: Any] = [:]
-  func flattenDic(_ dic: [String: Any], out: inout [String: Any], level: UInt, addedKey: String = "") {
-    if level == 0 { return }
-    for (key, val) in dic {
-      let modKey = addedKey + key
-      if let val = val as? [String: Any] {
-        flattenDic(val, out: &out, level: level - 1, addedKey: modKey)
-      } else {
-        // overwrite if key exists, but very rare case
-        var value = String()
-        if let val = val as? Array<Any> {
-            value = "\(val)".filter { !" \n\t\r".contains($0) }
-            out[modKey] = value
-        } else {
-            out[modKey] = val
+    var result: [String: Any] = [:]
+    func flattenDic(_ dic: [String: Any], out: inout [String: Any], level: UInt, addedKey: String = "") {
+        if level == 0 { return }
+        for (key, val) in dic {
+            let modKey = "\(addedKey) {\(key)}"
+            if let val = val as? [String: Any] {
+                flattenDic(val, out: &out, level: level - 1, addedKey: modKey)
+            } else {
+                // overwrite if key exists, but very rare case
+                var value = String()
+                if let val = val as? Array<Any> {
+                    value = "\(val)".filter { !" \n".contains($0) }
+                    out[modKey] = value
+                } else {
+                    out[modKey] = val
+                }
+                
+            }
         }
-        
-      }
     }
-  }
-  flattenDic(dic, out: &result, level: keepLevel)
-  return result
+    flattenDic(dic, out: &result, level: keepLevel)
+    return result
 }
 
 func dict<K, V>(_ tuples: [(K, V)]) -> [K: V] {
-  return tuples.reduce([:]) {
-    var dict: [K: V] = $0
-    dict[$1.0] = $1.1
-    return dict
-  }
+    return tuples.reduce([:]) {
+        var dict: [K: V] = $0
+        dict[$1.0] = $1.1
+        return dict
+    }
 }
