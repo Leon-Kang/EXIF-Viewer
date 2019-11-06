@@ -53,6 +53,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		355F77712372B3EA006682AB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6BFBA503233A4B5900DDE80E /* PhotoCollectionViewCell.swift */,
+				6BFBA504233A4B5900DDE80E /* PhotoCollectionViewCell.xib */,
+				6B8491B9233A5ADE00B9D281 /* AlbumsTableViewCell.swift */,
+				6B8491BA233A5ADE00B9D281 /* AlbumsTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		35B78CCA23729337000E5355 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
@@ -84,10 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				6BFBA507233A580400DDE80E /* PhotosCollectionViewController.swift */,
-				6BFBA503233A4B5900DDE80E /* PhotoCollectionViewCell.swift */,
-				6BFBA504233A4B5900DDE80E /* PhotoCollectionViewCell.xib */,
-				6B8491B9233A5ADE00B9D281 /* AlbumsTableViewCell.swift */,
-				6B8491BA233A5ADE00B9D281 /* AlbumsTableViewCell.xib */,
+				355F77712372B3EA006682AB /* View */,
 			);
 			path = Albums;
 			sourceTree = "<group>";

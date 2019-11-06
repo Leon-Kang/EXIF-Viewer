@@ -37,6 +37,11 @@ class PhotosCollectionViewController: UICollectionViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
 
 }
 
@@ -48,16 +53,27 @@ extension PhotosCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        if indexPath.row < photos.count {
+            let photo = photos[indexPath.row]
+            let infoViewController = UIStoryboard.viewController(.main, identifier: kInfoViewControllerIdentifier) as! ExifInfoViewController
+            infoViewController.photo = photo
+            self.navigationController?.pushViewController(infoViewController, animated: true)
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kPhotoCellIdentifier, for: indexPath) as! PhotoCollectionViewCell
+        if indexPath.row < photos.count {
+            cell.image = photos[indexPath.row].photoImage
+        }
+        #if DEBUG
+        cell.backgroundColor = UIColor.red
+        #endif
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
+        return photos.count
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {

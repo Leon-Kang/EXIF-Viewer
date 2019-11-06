@@ -25,6 +25,7 @@ extension UIStoryboard {
 class Photo: NSObject {
     var photoImage: UIImage?
     var title: String?
+    var asste: PHAsset?
 }
 
 class Album: NSObject {
@@ -37,10 +38,11 @@ class ViewController: UIViewController {
 
     var collections = [PHAssetCollection]()
     var albums = [Album]()
+    var photos = [PHAsset]()
     
-    let photosCollectionView = UIStoryboard.viewController(.main, identifier: kPhotosCollectionViewIdentifier) as! PhotosCollectionViewController
     
-    let infoViewController = UIStoryboard.viewController(.main, identifier: kInfoViewControllerIdentifier) as! PhotosCollectionViewController
+    
+//    let infoViewController = UIStoryboard.viewController(.main, identifier: kInfoViewControllerIdentifier) as! PhotosCollectionViewController
 
     
     
@@ -55,11 +57,11 @@ class ViewController: UIViewController {
         
         AppPermissionManager.shared.checkPhotoLib { (success) in
             if success {
-//                self.collections = self.allAlbumCollection()
-//                self.getAlbumCovers { (albums) in
-//                    self.albums = albums
-//                    self.tableView.reloadData()
-//                }
+                self.collections = self.allAlbumCollection()
+                self.getAlbumCovers { (albums) in
+                    self.albums = albums
+                    self.tableView.reloadData()
+                }
                 
             }
         }
@@ -161,6 +163,7 @@ class ViewController: UIViewController {
             convertPHAssetToUIImage(asset: assets[a_index],
                                     size: CGSize(width: 150, height: 150),
                                     mode: .highQualityFormat) { (photoImage) in
+                                        photo.asste = assets[a_index]
                                         photo.photoImage = photoImage
                                         photo.title = albumCollection.localizedTitle ?? ""
                                         photos.append(photo)
@@ -181,15 +184,16 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let row = indexPath.row
         if row < collections.count {
             self.getAlbumPhotos(albumCollection: collections[row]) { (photos, result) in
-                self.photosCollectionView.photos = photos
-                self.navigationController?.pushViewController(self.photosCollectionView, animated: true)
+                let photosCollectionView = UIStoryboard.viewController(.main, identifier: kPhotosCollectionViewIdentifier) as! PhotosCollectionViewController
+                photosCollectionView.photos = photos
+                self.navigationController?.pushViewController(photosCollectionView, animated: true)
             }
         }
         
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return albums.count
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -206,6 +210,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         if row < albums.count {
             cell.photo = albums[row].coverImage
             cell.title = albums[row].title
+            cell.count = albums[row].count
         }
         return cell
     }

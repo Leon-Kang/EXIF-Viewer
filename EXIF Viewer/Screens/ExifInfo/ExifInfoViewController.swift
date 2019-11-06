@@ -24,6 +24,14 @@ class ExifInfoViewController: UIViewController {
         }
     }
     
+    public var photo: Photo? {
+        didSet {
+            if let asset = photo?.asste {
+                self.getFullSizeAsset(asset: asset)
+            }
+        }
+    }
+    
     private let imagePicker: UIImagePickerController = UIImagePickerController()
     
     override func viewDidLoad() {
@@ -53,27 +61,37 @@ class ExifInfoViewController: UIViewController {
 
 extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    func getFullSizeAsset(asset: PHAsset) {
+        asset.requestContentEditingInput(with: nil) { [weak self] (input, result) in
+            if let url = input?.fullSizeImageURL {
+                self?.getOritationImage(imageUrl: url)
+            }
+            
+        }
+    }
+    
+    func getOritationImage(imageUrl: URL) {
+        let image = CIImage(contentsOf: imageUrl)
+        if let image = image {
+            self.image = UIImage(ciImage: image)
+        }
+        if let metaData = image?.properties {
+            self.dataSource = flattenDictionary(dic: metaData)
+            let sorted = self.dataSource.sorted { (value1, value2) -> Bool in
+                return value1.key < value2.key
+            }
+            self.dataSource = Dictionary()
+            for (key, value) in sorted {
+                self.dataSource[key] = value
+            }
+            self.updateUI()
+        }
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let asset = info[.phAsset] as? PHAsset {
-            asset.requestContentEditingInput(with: nil) { (input, result) in
-                if let url = input?.fullSizeImageURL {
-                    let image = CIImage(contentsOf: url)
-                    if let metaData = image?.properties {
-                        self.dataSource = flattenDictionary(dic: metaData)
-                        let sorted = self.dataSource.sorted { (value1, value2) -> Bool in
-                            return value1.key < value2.key
-                        }
-                        self.dataSource = Dictionary()
-                        for (key, value) in sorted {
-                            self.dataSource[key] = value
-                        }
-                        self.updateUI()
-                    }
-                    
-                }
-                
-            }
+            self.getFullSizeAsset(asset: asset)
         }
         
         if let image = info[.originalImage] as? UIImage, let data = image.jpegData(compressionQuality: 1.0) {
