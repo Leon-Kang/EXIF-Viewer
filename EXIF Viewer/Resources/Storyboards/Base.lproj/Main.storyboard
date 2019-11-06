@@ -91,14 +91,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L9G-Dd-pY9">
-                                <rect key="frame" x="0.0" y="104" width="414" height="240"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="240" id="oXh-v9-qG5"/>
-                                </constraints>
-                            </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Zr0-iU-TpS">
-                                <rect key="frame" x="0.0" y="352" width="414" height="510"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Zr0-iU-TpS">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="kCellIdentifier" rowHeight="101" id="zyg-UD-S2z" customClass="InfoTableViewCell" customModule="EXIF_Viewer" customModuleProvider="target">
@@ -145,12 +139,9 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="Zr0-iU-TpS" firstAttribute="top" secondItem="7Mo-RB-2H7" secondAttribute="top" id="0DP-EM-si1"/>
                             <constraint firstItem="Zr0-iU-TpS" firstAttribute="bottom" secondItem="7Mo-RB-2H7" secondAttribute="bottom" id="4BF-0S-iXm"/>
                             <constraint firstItem="Zr0-iU-TpS" firstAttribute="trailing" secondItem="7Mo-RB-2H7" secondAttribute="trailing" id="5BP-BC-hC4"/>
-                            <constraint firstItem="7Mo-RB-2H7" firstAttribute="trailing" secondItem="L9G-Dd-pY9" secondAttribute="trailing" id="PUK-uP-phR"/>
-                            <constraint firstItem="L9G-Dd-pY9" firstAttribute="top" secondItem="7Mo-RB-2H7" secondAttribute="top" constant="16" id="XAx-kQ-8w3"/>
-                            <constraint firstItem="L9G-Dd-pY9" firstAttribute="leading" secondItem="7Mo-RB-2H7" secondAttribute="leading" id="rao-Qw-zh7"/>
-                            <constraint firstItem="Zr0-iU-TpS" firstAttribute="top" secondItem="L9G-Dd-pY9" secondAttribute="bottom" constant="8" id="vpU-7m-lV7"/>
                             <constraint firstItem="Zr0-iU-TpS" firstAttribute="leading" secondItem="7Mo-RB-2H7" secondAttribute="leading" id="wSa-rp-SI2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7Mo-RB-2H7"/>
@@ -169,8 +160,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JLR-PQ-vlJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <imageView clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L9G-Dd-pY9">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="240"/>
+                </imageView>
             </objects>
-            <point key="canvasLocation" x="1914" y="139"/>
+            <point key="canvasLocation" x="1913.0434782608697" y="138.61607142857142"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Plp-hX-fdN">

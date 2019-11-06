@@ -32,6 +32,8 @@ class ExifInfoViewController: UIViewController {
         }
     }
     
+    let tableViewHeader = UIView()
+    
     private let imagePicker: UIImagePickerController = UIImagePickerController()
     
     override func viewDidLoad() {
@@ -139,6 +141,21 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard tableViewHeader.subviews.contains(imageView) else {
+            tableViewHeader.addSubview(imageView)
+            tableViewHeader.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: 240)
+            imageView.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: 240)
+            return tableViewHeader
+        }
+
+        return tableViewHeader
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 240
     }
     
 }
