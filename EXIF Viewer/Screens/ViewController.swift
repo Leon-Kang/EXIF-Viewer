@@ -22,7 +22,7 @@ extension UIStoryboard {
 
 
 
-class Photo: NSObject {
+struct Photo {
     var photoImage: UIImage?
     var title: String?
     var asset: PHAsset?
@@ -39,13 +39,6 @@ class ViewController: UIViewController {
     var collections = [PHAssetCollection]()
     var albums = [Album]()
     var photos = [PHAsset]()
-    
-    
-    
-//    let infoViewController = UIStoryboard.viewController(.main, identifier: kInfoViewControllerIdentifier) as! PhotosCollectionViewController
-
-    
-    
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -159,7 +152,7 @@ class ViewController: UIViewController {
         var photos = [Photo]()
 
         for a_index in 0 ..< assets.count {
-            let photo = Photo()
+            var photo = Photo()
             convertPHAssetToUIImage(asset: assets[a_index],
                                     size: CGSize(width: 150, height: 150),
                                     mode: .highQualityFormat) { (photoImage) in
@@ -174,9 +167,6 @@ class ViewController: UIViewController {
             }
         }
     }
-    
-    
-    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -189,7 +179,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 self.navigationController?.pushViewController(photosCollectionView, animated: true)
             }
         }
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
