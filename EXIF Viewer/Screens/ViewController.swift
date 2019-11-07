@@ -25,7 +25,7 @@ extension UIStoryboard {
 class Photo: NSObject {
     var photoImage: UIImage?
     var title: String?
-    var asste: PHAsset?
+    var asset: PHAsset?
 }
 
 class Album: NSObject {
@@ -91,7 +91,7 @@ class ViewController: UIViewController {
         return collections
     }
     
-    func getAlbumCovers(complateHandler: @escaping (_ coverAlbums: [Album]) -> Void) {
+    func getAlbumCovers(completeHandler: @escaping (_ coverAlbums: [Album]) -> Void) {
         let albumCollections = collections
         var albums = [Album](repeating: Album(), count: collections.count)
         
@@ -109,7 +109,7 @@ class ViewController: UIViewController {
                 album.coverImage = UIImage()
                 albums.insert(album, at: index)
                 if albumCollections.count == emptyCollectionsCount + notEmptyCount {
-                    complateHandler(albums)
+                    completeHandler(albums)
                 }
                 continue
             }
@@ -121,7 +121,7 @@ class ViewController: UIViewController {
                                         albums.insert(album, at: index)
 
                                         if albumCollections.count == emptyCollectionsCount + notEmptyCount {
-                                            complateHandler(albums)
+                                            completeHandler(albums)
                                         }
             }
         }
@@ -136,9 +136,9 @@ class ViewController: UIViewController {
     }
     
     func convertPHAssetToUIImage(asset: PHAsset,
-                                          size: CGSize,
-                                          mode: PHImageRequestOptionsDeliveryMode,
-                                          complateHandler: @escaping (_ photo: UIImage?) -> Void) {
+                                 size: CGSize,
+                                 mode: PHImageRequestOptionsDeliveryMode,
+                                 completeHandler: @escaping (_ photo: UIImage?) -> Void) {
         let coverSize = size
         let options = PHImageRequestOptions()
         options.isSynchronous = false
@@ -148,13 +148,13 @@ class ViewController: UIViewController {
                                               targetSize: coverSize,
                                               contentMode: .default,
                                               options: options) { result, info in
-                                                guard result != nil else { return complateHandler(nil) }
-                                                complateHandler(result)
+                                                guard result != nil else { return completeHandler(nil) }
+                                                completeHandler(result)
         }
     }
     
     func getAlbumPhotos(albumCollection: PHAssetCollection,
-                        complateHandler: @escaping (([Photo], PHFetchResult<PHAsset>) -> Void)) {
+                        completeHandler: @escaping (([Photo], PHFetchResult<PHAsset>) -> Void)) {
         let assets = albumPHAssets(albumCollection)
         var photos = [Photo]()
 
@@ -163,13 +163,13 @@ class ViewController: UIViewController {
             convertPHAssetToUIImage(asset: assets[a_index],
                                     size: CGSize(width: 150, height: 150),
                                     mode: .highQualityFormat) { (photoImage) in
-                                        photo.asste = assets[a_index]
+                                        photo.asset = assets[a_index]
                                         photo.photoImage = photoImage
                                         photo.title = albumCollection.localizedTitle ?? ""
                                         photos.append(photo)
 
                                         if a_index == assets.count - 1 {
-                                            complateHandler(photos, assets)
+                                            completeHandler(photos, assets)
                                         }
             }
         }

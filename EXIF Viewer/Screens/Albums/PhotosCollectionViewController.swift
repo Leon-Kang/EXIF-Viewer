@@ -23,7 +23,7 @@ class PhotosCollectionViewController: UICollectionViewController {
     var cellSizeStyle : CellSizeStyle = .Small
        
     var cellSizeDictionary = [CellSizeStyle : CGSize]()
-    var cellItemSpcing : [CellSizeStyle : CGFloat] = [.Big : 16, .Normal : 8, .Small : 16.0]
+    var cellItemSpacing: [CellSizeStyle : CGFloat] = [.Big : 16, .Normal : 8, .Small : 16.0]
        
     
     override func viewDidLoad() {
@@ -102,6 +102,6 @@ extension PhotosCollectionViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return cellItemSpcing[cellSizeStyle]!
+        return cellItemSpacing[cellSizeStyle]!
     }
 }

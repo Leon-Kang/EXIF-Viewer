@@ -10,7 +10,7 @@ import UIKit
 import Photos
 import AVFoundation
 
-enum PermisstionType {
+enum PermissionType {
     case camera, photoLib
 }
 
@@ -29,7 +29,7 @@ class AppPermissionManager: NSObject {
         }
     }
     
-    private func checkPermission(type: PermisstionType, handler: @escaping (Bool) -> Void) {
+    private func checkPermission(type: PermissionType, handler: @escaping (Bool) -> Void) {
         switch type {
         case .camera:
             checkCameraPermission { (success) in
@@ -52,7 +52,7 @@ class AppPermissionManager: NSObject {
             }
             return
         case .denied, .restricted:
-            showRequstAlert(type: .photoLib)
+            showRequestAlert(type: .photoLib)
             result = false
         case .authorized:
             break
@@ -76,7 +76,7 @@ class AppPermissionManager: NSObject {
             }
             return
         case .denied, .restricted:
-            showRequstAlert(type: .camera)
+            showRequestAlert(type: .camera)
             result = false
         case .authorized:
             break
@@ -91,7 +91,7 @@ class AppPermissionManager: NSObject {
         handler(result)
     }
     
-    private func showRequstAlert(type: PermisstionType) {
+    private func showRequestAlert(type: PermissionType) {
         var message = ""
         switch type {
         case .camera:

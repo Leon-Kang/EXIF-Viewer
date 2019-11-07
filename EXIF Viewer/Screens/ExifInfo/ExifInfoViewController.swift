@@ -26,7 +26,7 @@ class ExifInfoViewController: UIViewController {
     
     public var photo: Photo? {
         didSet {
-            if let asset = photo?.asste {
+            if let asset = photo?.asset {
                 self.getFullSizeAsset(asset: asset)
             }
         }
@@ -66,13 +66,13 @@ extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationC
     func getFullSizeAsset(asset: PHAsset) {
         asset.requestContentEditingInput(with: nil) { [weak self] (input, result) in
             if let url = input?.fullSizeImageURL {
-                self?.getOritationImage(imageUrl: url)
+                self?.getOrationImage(imageUrl: url)
             }
             
         }
     }
     
-    func getOritationImage(imageUrl: URL) {
+    func getOrationImage(imageUrl: URL) {
         let image = CIImage(contentsOf: imageUrl)
         if let image = image {
             self.image = UIImage(ciImage: image)
@@ -86,6 +86,8 @@ extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationC
             for (key, value) in sorted {
                 self.dataSource[key] = value
             }
+            
+            
             self.updateUI()
         }
     }
