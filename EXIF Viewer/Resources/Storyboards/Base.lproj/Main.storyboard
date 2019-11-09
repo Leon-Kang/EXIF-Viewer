@@ -11,7 +11,6 @@
         <!--Navigation Controller-->
         <scene sceneID="AR1-4L-A7b">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Y6O-th-ZIG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController id="LJk-Q7-nZw" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="KNj-7Z-s0B">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -21,6 +20,7 @@
                         <segue destination="REy-lU-Sb5" kind="relationship" relationship="rootViewController" id="YNC-2O-1qm"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y6O-th-ZIG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-791" y="196"/>
         </scene>
@@ -181,10 +181,10 @@
             </objects>
             <point key="canvasLocation" x="1162" y="196"/>
         </scene>
-        <!--Split View Controller-->
+        <!--Primary Split View Controller-->
         <scene sceneID="hSv-qC-2gY">
             <objects>
-                <splitViewController id="n21-6N-Zxr" sceneMemberID="viewController">
+                <splitViewController id="n21-6N-Zxr" customClass="PrimarySplitViewController" customModule="EXIF_Viewer" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="UUu-Et-C8A" kind="relationship" relationship="masterViewController" id="2y9-QD-YpG"/>
                         <segue destination="LJk-Q7-nZw" kind="relationship" relationship="detailViewController" id="gsl-Wd-FrQ"/>
@@ -217,6 +217,6 @@
         <image name="photo.on.rectangle" catalog="system" width="64" height="48"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="VP8-cN-cBr"/>
+        <segue reference="gsl-Wd-FrQ"/>
     </inferredMetricsTieBreakers>
 </document>

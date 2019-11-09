@@ -9,19 +9,6 @@
 import UIKit
 import Photos
 
-public let kScreenHeight = UIScreen.main.bounds.height
-public let kScreenWidth = UIScreen.main.bounds.width
-
-extension UIStoryboard {
-    static let main = UIStoryboard(name: "Main", bundle: nil)
-    
-    static func viewController(_ storyboard: UIStoryboard, identifier: String) -> UIViewController {
-        return storyboard.instantiateViewController(withIdentifier: identifier)
-    }
-}
-
-
-
 struct Photo {
     var photoImage: UIImage?
     var title: String?
@@ -169,6 +156,7 @@ class AlbumViewController: UIViewController {
     }
 }
 
+// MARK: UITableView Delegate
 extension AlbumViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row

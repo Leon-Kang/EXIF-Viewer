@@ -9,17 +9,9 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        guard let splitViewController = window?.rootViewController as? UISplitViewController else { fatalError("No SplitViewController") }
-        splitViewController.delegate = self
-        splitViewController.preferredDisplayMode = .allVisible
-        
-        window?.makeKeyAndVisible()
         
         return true
     }
