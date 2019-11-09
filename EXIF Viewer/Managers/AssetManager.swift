@@ -85,4 +85,39 @@ open class AssetManager {
         }
         return images
     }
+    
+    public static func allPhotos() -> PHFetchResult<PHAsset> {
+        let options = PHFetchOptions()
+        options.sortDescriptors = [NSSortDescriptor(key: "createDate", ascending: false)]
+        return PHAsset.fetchAssets(with: options)
+    }
+    
+    public static func smartAlbums() -> PHFetchResult<PHAssetCollection> {
+        return PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: nil)
+    }
+    
+    public static func nonEmptyAlbums() -> [PHAssetCollection] {
+        var result = [PHAssetCollection]
+        smartAlbums().enumerateObjects { (collection, start, stop) in
+            if collection.count > 0 {
+                result.append(collection)
+            }
+        }
+        return result
+    }
+}
+
+
+extension PHAssetCollection {
+    var count: Int {
+        return PHAsset.fetchAssets(in: self, options: nil).count
+    }
+    
+    func newestImage() -> PHAsset? {
+        let images: PHFetchResult = PHAsset.fetchAssets(in: self, options: nil)
+        if images.count > 0 {
+            return images.lastObject
+        }
+        return nil
+    }
 }

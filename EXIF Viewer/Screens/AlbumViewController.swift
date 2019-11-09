@@ -34,7 +34,7 @@ class Album: NSObject {
     var count: Int = 0
 }
 
-class ViewController: UIViewController {
+class AlbumViewController: UIViewController {
 
     var collections = [PHAssetCollection]()
     var albums = [Album]()
@@ -169,7 +169,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+extension AlbumViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
         if row < collections.count {
