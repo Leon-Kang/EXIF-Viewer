@@ -97,13 +97,45 @@ open class AssetManager {
     }
     
     public static func nonEmptyAlbums() -> [PHAssetCollection] {
-        var result = [PHAssetCollection]
+        var result = [PHAssetCollection]()
         smartAlbums().enumerateObjects { (collection, start, stop) in
             if collection.count > 0 {
                 result.append(collection)
             }
         }
         return result
+    }
+    
+    public static func userAssetColletions() -> [PHAssetCollection] {
+        var result = [PHAssetCollection]()
+        let list = PHCollectionList.fetchTopLevelUserCollections(with: nil)
+        
+        list.enumerateObjects { (collection, start, stop) in
+            if let collection = collection as? PHAssetCollection {
+                result.append(collection)
+            } else if let list = collection as? PHCollectionList {
+                let collections = flattenCollectionList(list)
+                result.append(contentsOf: collections)
+            }
+        }
+        
+        return result
+    }
+    
+    public static func flattenCollectionList(_ list: PHCollectionList) -> [PHAssetCollection] {
+        var assetCollections = [PHAssetCollection]()
+        let temp: PHFetchResult<PHCollection> = PHCollectionList.fetchCollections(in: list, options: nil)
+        
+        temp.enumerateObjects { (collection, start, stop) in
+            if let collection = collection as? PHAssetCollection {
+                assetCollections.append(collection)
+            } else if let list = collection as? PHCollectionList {
+                let collections = flattenCollectionList(list)
+                assetCollections.append(contentsOf: collections)
+            }
+        }
+        
+        return assetCollections
     }
 }
 
