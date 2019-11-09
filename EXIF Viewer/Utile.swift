@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 public let kScreenHeight = UIScreen.main.bounds.height
 public let kScreenWidth = UIScreen.main.bounds.width

@@ -88,7 +88,7 @@ open class AssetManager {
     
     public static func allPhotos() -> PHFetchResult<PHAsset> {
         let options = PHFetchOptions()
-        options.sortDescriptors = [NSSortDescriptor(key: "createDate", ascending: false)]
+        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         return PHAsset.fetchAssets(with: options)
     }
     
@@ -106,9 +106,13 @@ open class AssetManager {
         return result
     }
     
+    public static func userColletions() -> PHFetchResult<PHCollection> {
+        return PHCollectionList.fetchTopLevelUserCollections(with: nil)
+    }
+    
     public static func userAssetColletions() -> [PHAssetCollection] {
         var result = [PHAssetCollection]()
-        let list = PHCollectionList.fetchTopLevelUserCollections(with: nil)
+        let list = userColletions()
         
         list.enumerateObjects { (collection, start, stop) in
             if let collection = collection as? PHAssetCollection {

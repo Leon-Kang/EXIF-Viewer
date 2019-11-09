@@ -22,6 +22,19 @@ class Album: NSObject {
 }
 
 class AlbumViewController: UIViewController {
+    
+    enum Section: Int {
+        case allPhotos, smartAlbums, userCollections
+        
+        static let count = 3
+    }
+    
+    var allPhotos: PHFetchResult<PHAsset>!
+    var smartAlbums: PHFetchResult<PHAssetCollection>!
+    var nonEmptySmartAlbums: [PHAssetCollection] = []
+    var userCollections: PHFetchResult<PHCollection>!
+    var userAssetCollections: [PHAssetCollection] = []
+    let sectionLocalizedTitles = ["a", "b", "c"]
 
     var collections = [PHAssetCollection]()
     var albums = [Album]()
@@ -45,6 +58,18 @@ class AlbumViewController: UIViewController {
                 
             }
         }
+        
+        allPhotos = AssetManager.allPhotos()
+        smartAlbums = AssetManager.smartAlbums()
+        nonEmptySmartAlbums = AssetManager.nonEmptyAlbums()
+        userCollections = AssetManager.userColletions()
+        userAssetCollections = AssetManager.userAssetColletions()
+        
+        PHPhotoLibrary.shared().register(self)
+    }
+    
+    deinit {
+        PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
 
     private func allAlbumCollection() -> [PHAssetCollection] {
@@ -158,6 +183,50 @@ class AlbumViewController: UIViewController {
 
 // MARK: UITableView Delegate
 extension AlbumViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: kAlbumsCellIdentifier, for: indexPath) as! AlbumsTableViewCell
+        
+        cell.photo = nil
+        
+        switch Section(rawValue: indexPath.section)! {
+            
+        case .allPhotos:
+            cell.title = "all photos"
+            cell.count = allPhotos.count
+            if allPhotos.count > 0 {
+                AssetManager.resolveAsset(allPhotos.object(at: 0),
+                                          size: CGSize(width: 72, height: 72),
+                                          completion: { (thumnail) in
+                                            cell.photo = thumnail
+                })
+            }
+            return cell
+            
+        case .smartAlbums:
+            let collection = nonEmptySmartAlbums[indexPath.row]
+            cell.title = collection.localizedTitle
+            cell.count = collection.count
+            if let firstImage = collection.newestImage() {
+                AssetManager.resolveAsset(firstImage) { (thumnail) in
+                    cell.photo = thumnail
+                }
+            }
+            return cell
+            
+        case .userCollections:
+            let assetCollection = userAssetCollections[indexPath.row]
+            cell.title = assetCollection.localizedTitle
+            cell.count = assetCollection.count
+            if let firstImage = assetCollection.newestImage() {
+                AssetManager.resolveAsset(firstImage) { (thumnail) in
+                    cell.photo = thumnail
+                }
+            }
+            return cell
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = indexPath.row
         if row < collections.count {
@@ -169,8 +238,30 @@ extension AlbumViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        var count = 1
+        if nonEmptySmartAlbums.count > 0 {
+            count += 1
+        }
+        if userAssetCollections.count > 0 {
+            count += 1
+        }
+        return count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return albums.count
+        var count = 1
+        switch Section(rawValue: section) {
+        case .allPhotos:
+            break
+        case .smartAlbums:
+            count = nonEmptySmartAlbums.count
+        case .userCollections:
+            count = userAssetCollections.count
+        case .none:
+            count = 0
+        }
+        return count
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -181,14 +272,29 @@ extension AlbumViewController: UITableViewDelegate, UITableViewDataSource {
         return 124
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: kAlbumsCellIdentifier, for: indexPath) as! AlbumsTableViewCell
-        let row = indexPath.row
-        if row < albums.count {
-            cell.photo = albums[row].coverImage
-            cell.title = albums[row].title
-            cell.count = albums[row].count
+}
+
+// MARK: Photo lib observer
+
+extension AlbumViewController: PHPhotoLibraryChangeObserver {
+    func photoLibraryDidChange(_ changeInstance: PHChange) {
+        
+        if let changeDetails = changeInstance.changeDetails(for: allPhotos) {
+            allPhotos = changeDetails.fetchResultAfterChanges
         }
-        return cell
+        
+        if let changeDetails = changeInstance.changeDetails(for: smartAlbums) {
+            smartAlbums = changeDetails.fetchResultAfterChanges
+            nonEmptySmartAlbums = AssetManager.nonEmptyAlbums()
+        }
+        
+        if let changeDetails = changeInstance.changeDetails(for: userCollections) {
+            userCollections = changeDetails.fetchResultAfterChanges
+            userAssetCollections = AssetManager.userAssetColletions()
+        }
+        
+        DispatchQueue.main.async {
+           self.tableView.reloadData()
+        }
     }
 }
