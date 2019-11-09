@@ -138,6 +138,8 @@ extension AlbumViewController: UITableViewDelegate, UITableViewDataSource {
         photosCollectionView.fetchResult = fetchResult
         
         self.navigationController?.pushViewController(photosCollectionView, animated: true)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
