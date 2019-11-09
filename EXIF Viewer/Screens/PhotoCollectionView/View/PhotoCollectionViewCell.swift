@@ -11,14 +11,28 @@ import UIKit
 let kPhotoCellIdentifier = "kPhotoCellIdentifier"
 
 class PhotoCollectionViewCell: UICollectionViewCell {
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet var livePhotoBadgeImageView: UIImageView!
 
     var image: UIImage? {
         didSet {
             self.imageView.image = image
         }
     }
+    var livePhotoBadgeImage: UIImage? {
+        didSet {
+            livePhotoBadgeImageView.image = livePhotoBadgeImage
+        }
+    }
     
-    @IBOutlet weak var imageView: UIImageView!
+    var representedAssetIdentifier: String!
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+        livePhotoBadgeImageView.image = nil
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -62,8 +62,6 @@
 		355F77712372B3EA006682AB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6BFBA503233A4B5900DDE80E /* PhotoCollectionViewCell.swift */,
-				6BFBA504233A4B5900DDE80E /* PhotoCollectionViewCell.xib */,
 				6B8491B9233A5ADE00B9D281 /* AlbumsTableViewCell.swift */,
 				6B8491BA233A5ADE00B9D281 /* AlbumsTableViewCell.xib */,
 			);
@@ -73,7 +71,7 @@
 		35B78CCA23729337000E5355 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				6BFBA4F1233A48CD00DDE80E /* AlbumViewController.swift */,
+				6BE533972377127E00DACF8C /* PhotoCollectionView */,
 				35B78CCC23729377000E5355 /* ExifInfo */,
 				35B78CCD237293CB000E5355 /* Albums */,
 			);
@@ -101,7 +99,7 @@
 		35B78CCD237293CB000E5355 /* Albums */ = {
 			isa = PBXGroup;
 			children = (
-				6BFBA507233A580400DDE80E /* PhotosCollectionViewController.swift */,
+				6BFBA4F1233A48CD00DDE80E /* AlbumViewController.swift */,
 				355F77712372B3EA006682AB /* View */,
 			);
 			path = Albums;
@@ -123,6 +121,24 @@
 				6BFBA4F8233A48D000DDE80E /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		6BE533972377127E00DACF8C /* PhotoCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				6BFBA507233A580400DDE80E /* PhotosCollectionViewController.swift */,
+				6BE533982377129E00DACF8C /* View */,
+			);
+			path = PhotoCollectionView;
+			sourceTree = "<group>";
+		};
+		6BE533982377129E00DACF8C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6BFBA503233A4B5900DDE80E /* PhotoCollectionViewCell.swift */,
+				6BFBA504233A4B5900DDE80E /* PhotoCollectionViewCell.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		6BFBA4E1233A48CD00DDE80E = {
