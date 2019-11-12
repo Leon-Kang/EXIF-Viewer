@@ -42,17 +42,15 @@ class AlbumViewController: UIViewController {
         
         tableView.register(UINib(nibName: "AlbumsTableViewCell", bundle: nil), forCellReuseIdentifier: kAlbumsCellIdentifier)
         
-        AppPermissionManager.shared.checkPhotoLib { (success) in
+        AppPermissionManager.shared.checkPhotoLib { [weak self] (success) in
             if success {
-                
+                DispatchQueue.main.async {
+                    self?.initDataBase()
+                    self?.tableView.reloadData()
+                }
             }
         }
-        
-        allPhotos = AssetManager.allPhotos()
-        smartAlbums = AssetManager.smartAlbums()
-        nonEmptySmartAlbums = AssetManager.nonEmptyAlbums()
-        userCollections = AssetManager.userColletions()
-        userAssetCollections = AssetManager.userAssetColletions()
+        initDataBase()
         
         PHPhotoLibrary.shared().register(self)
     }
@@ -61,6 +59,13 @@ class AlbumViewController: UIViewController {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
 
+    private func initDataBase() {
+        allPhotos = AssetManager.allPhotos()
+        smartAlbums = AssetManager.smartAlbums()
+        nonEmptySmartAlbums = AssetManager.nonEmptyAlbums()
+        userCollections = AssetManager.userColletions()
+        userAssetCollections = AssetManager.userAssetColletions()
+    }
 }
 
 // MARK: UITableView Delegate
