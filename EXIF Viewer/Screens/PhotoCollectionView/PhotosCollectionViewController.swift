@@ -22,7 +22,7 @@ fileprivate extension UICollectionView {
 public enum CellSizeStyle {
     public typealias RawValue = String
     
-    case Big, Normal, Small
+    case big, normal, small
 }
 
 class PhotosCollectionViewController: UICollectionViewController {
@@ -36,10 +36,10 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     public var photos = [Photo]()
 
-    var cellSizeStyle : CellSizeStyle = .Normal
+    var cellSizeStyle : CellSizeStyle = .normal
        
     var cellSizeDictionary = [CellSizeStyle : CGSize]()
-    var cellItemSpacing: [CellSizeStyle : CGFloat] = [.Big : 16, .Normal : 2, .Small : 16.0]
+    var cellItemSpacing: [CellSizeStyle : CGFloat] = [.big : 16, .normal : 2, .small : 16.0]
        
     
     override func viewDidLoad() {
