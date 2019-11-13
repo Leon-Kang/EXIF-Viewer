@@ -26,19 +26,30 @@ class ExifInfoViewController: UIViewController {
     
     public var asset: PHAsset! {
         didSet {
+            AssetManager.resolveAsset(asset, size: targetSize, completion: { [weak self] (image) in
+                self?.image = image
+            })
             self.getFullSizeAsset(asset: asset)
         }
     }
+    var assetCollection: PHAssetCollection!
     
-    public var photo: Photo? {
-        didSet {
-            if let asset = photo?.asset {
-                self.getFullSizeAsset(asset: asset)
-            }
-        }
-    }
+    fileprivate let imageManager = PHCachingImageManager()
+    fileprivate var imageRequestId: PHImageRequestID?
+    fileprivate var editingInputRequestId: PHContentEditingInputRequestID?
     
     let tableViewHeader = UIView()
+    lazy var headerSize: CGSize = {
+        let height = kScreenWidth * CGFloat(asset.pixelHeight) / CGFloat(asset.pixelWidth)
+        let width = kScreenWidth
+        return CGSize(width: width, height: height)
+    }()
+    
+    var targetSize: CGSize {
+        let scale = UIScreen.main.scale
+        return CGSize(width: imageView.bounds.width * scale,
+                      height: imageView.bounds.height * scale)
+    }
     
     private let imagePicker: UIImagePickerController = UIImagePickerController()
     
@@ -47,6 +58,14 @@ class ExifInfoViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        PHPhotoLibrary.shared().register(self)
+    }
+    
+    
     
     func updateUI() {
         self.imageView.image = image
@@ -80,9 +99,6 @@ extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationC
     
     func getOrationImage(imageUrl: URL) {
         let image = CIImage(contentsOf: imageUrl)
-        if let image = image {
-            self.image = UIImage(ciImage: image)
-        }
         if let metaData = image?.properties {
             self.dataSource = flattenDictionary(dic: metaData)
             let sorted = self.dataSource.sorted { (value1, value2) -> Bool in
@@ -92,9 +108,7 @@ extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationC
             for (key, value) in sorted {
                 self.dataSource[key] = value
             }
-            
-            
-            self.updateUI()
+            self.tableView.reloadData()
         }
     }
     
@@ -112,6 +126,7 @@ extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationC
 //            dataSource = flattenDictionary(dic: NSDictionary(dictionary: metaData) as! [String : Any])
 //
 //            updateUI()
+            self.tableView.reloadData()
         }
         picker.dismiss(animated: true, completion: nil)
     }
@@ -154,8 +169,8 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard tableViewHeader.subviews.contains(imageView) else {
             tableViewHeader.addSubview(imageView)
-            tableViewHeader.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: 240)
-            imageView.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: 240)
+            tableViewHeader.frame = CGRect(origin: CGPoint.zero, size: headerSize)
+            imageView.frame = CGRect(origin: CGPoint.zero, size: headerSize)
             return tableViewHeader
         }
 
@@ -163,7 +178,7 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 240
+        return headerSize.height
     }
     
 }
@@ -198,5 +213,28 @@ func dict<K, V>(_ tuples: [(K, V)]) -> [K: V] {
         var dict: [K: V] = $0
         dict[$1.0] = $1.1
         return dict
+    }
+}
+
+
+// MARK: PHPhotoLibraryChangeObserver
+extension ExifInfoViewController: PHPhotoLibraryChangeObserver {
+    
+    func photoLibraryDidChange(_ changeInstance: PHChange) {
+        guard let curAsset = asset, let details = changeInstance.changeDetails(for: curAsset) else {
+            return
+        }
+        asset = details.objectAfterChanges
+        
+        DispatchQueue.main.async {
+            guard let _ = self.asset else {
+                self.navigationController?.popViewController(animated: true)
+                return
+            }
+            
+            if details.assetContentChanged {
+                self.updateUI()
+            }
+        }
     }
 }
