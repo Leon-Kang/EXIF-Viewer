@@ -15,7 +15,8 @@ class ExifInfoViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
-    
+
+    lazy var metaDataManager: MetaDataManager = MetaDataManager(asset: asset)
     var dataSource = [String: Any]()
     
     public var image: UIImage? {
@@ -89,18 +90,8 @@ class ExifInfoViewController: UIViewController {
 extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func getFullSizeAsset(asset: PHAsset) {
-        asset.requestContentEditingInput(with: nil) { [weak self] (input, result) in
-            if let url = input?.fullSizeImageURL {
-                self?.getOrationImage(imageUrl: url)
-            }
-            
-        }
-    }
-    
-    func getOrationImage(imageUrl: URL) {
-        let image = CIImage(contentsOf: imageUrl)
-        if let metaData = image?.properties {
-            self.dataSource = flattenDictionary(dic: metaData)
+        metaDataManager.getOrientationMetaData { result in
+            self.dataSource = flattenDictionary(dic: result)
             let sorted = self.dataSource.sorted { (value1, value2) -> Bool in
                 return value1.key < value2.key
             }

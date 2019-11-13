@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		32A11C0C62D1B32ADA8437C7 /* AssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A117A462131873E926C354 /* AssetManager.swift */; };
 		35A04950233B113B00F768A6 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0494F233B113B00F768A6 /* InfoTableViewCell.swift */; };
+		6B2918F3237C3AB9004EA408 /* MetaDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2918F2237C3AB9004EA408 /* MetaDataManager.swift */; };
 		6B8491BB233A5ADE00B9D281 /* AlbumsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8491B9233A5ADE00B9D281 /* AlbumsTableViewCell.swift */; };
 		6B8491BC233A5ADE00B9D281 /* AlbumsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8491BA233A5ADE00B9D281 /* AlbumsTableViewCell.xib */; };
 		6B8491BE233A5E7D00B9D281 /* AppPermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8491BD233A5E7C00B9D281 /* AppPermissionManager.swift */; };
@@ -29,6 +30,7 @@
 /* Begin PBXFileReference section */
 		32A117A462131873E926C354 /* AssetManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetManager.swift; sourceTree = "<group>"; };
 		35A0494F233B113B00F768A6 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
+		6B2918F2237C3AB9004EA408 /* MetaDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataManager.swift; sourceTree = "<group>"; };
 		6B8491B9233A5ADE00B9D281 /* AlbumsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewCell.swift; sourceTree = "<group>"; };
 		6B8491BA233A5ADE00B9D281 /* AlbumsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlbumsTableViewCell.xib; sourceTree = "<group>"; };
 		6B8491BD233A5E7C00B9D281 /* AppPermissionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppPermissionManager.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 			children = (
 				6B8491BD233A5E7C00B9D281 /* AppPermissionManager.swift */,
 				32A117A462131873E926C354 /* AssetManager.swift */,
+				6B2918F2237C3AB9004EA408 /* MetaDataManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 				6BE533962376F65A00DACF8C /* Utile.swift in Sources */,
 				6BFBA4F0233A48CD00DDE80E /* SceneDelegate.swift in Sources */,
 				32A11C0C62D1B32ADA8437C7 /* AssetManager.swift in Sources */,
+				6B2918F3237C3AB9004EA408 /* MetaDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
