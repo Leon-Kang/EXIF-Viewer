@@ -165,10 +165,10 @@ extension PhotosCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row < photos.count {
-            let photo = photos[indexPath.row]
+        if indexPath.row < fetchResult.count {
+            let asset = fetchResult[indexPath.row]
             let infoViewController = UIStoryboard.viewController(.main, identifier: kInfoViewControllerIdentifier) as! ExifInfoViewController
-            infoViewController.photo = photo
+            infoViewController.asset = asset
             self.navigationController?.pushViewController(infoViewController, animated: true)
         }
     }

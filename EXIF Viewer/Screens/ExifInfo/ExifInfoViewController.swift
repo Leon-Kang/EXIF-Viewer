@@ -24,6 +24,12 @@ class ExifInfoViewController: UIViewController {
         }
     }
     
+    public var asset: PHAsset! {
+        didSet {
+            self.getFullSizeAsset(asset: asset)
+        }
+    }
+    
     public var photo: Photo? {
         didSet {
             if let asset = photo?.asset {
