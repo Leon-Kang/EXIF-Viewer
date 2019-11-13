@@ -10,6 +10,7 @@
 		32A11C0C62D1B32ADA8437C7 /* AssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A117A462131873E926C354 /* AssetManager.swift */; };
 		35A04950233B113B00F768A6 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0494F233B113B00F768A6 /* InfoTableViewCell.swift */; };
 		6B2918F3237C3AB9004EA408 /* MetaDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2918F2237C3AB9004EA408 /* MetaDataManager.swift */; };
+		6B2918F5237C5528004EA408 /* MetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2918F4237C5528004EA408 /* MetaData.swift */; };
 		6B8491BB233A5ADE00B9D281 /* AlbumsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8491B9233A5ADE00B9D281 /* AlbumsTableViewCell.swift */; };
 		6B8491BC233A5ADE00B9D281 /* AlbumsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B8491BA233A5ADE00B9D281 /* AlbumsTableViewCell.xib */; };
 		6B8491BE233A5E7D00B9D281 /* AppPermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8491BD233A5E7C00B9D281 /* AppPermissionManager.swift */; };
@@ -31,6 +32,7 @@
 		32A117A462131873E926C354 /* AssetManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetManager.swift; sourceTree = "<group>"; };
 		35A0494F233B113B00F768A6 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
 		6B2918F2237C3AB9004EA408 /* MetaDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataManager.swift; sourceTree = "<group>"; };
+		6B2918F4237C5528004EA408 /* MetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaData.swift; sourceTree = "<group>"; };
 		6B8491B9233A5ADE00B9D281 /* AlbumsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewCell.swift; sourceTree = "<group>"; };
 		6B8491BA233A5ADE00B9D281 /* AlbumsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlbumsTableViewCell.xib; sourceTree = "<group>"; };
 		6B8491BD233A5E7C00B9D281 /* AppPermissionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppPermissionManager.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				6BFBA4EF233A48CD00DDE80E /* SceneDelegate.swift */,
 				6BE533932376F48600DACF8C /* PrimarySplitViewController.swift */,
 				6BE533952376F65A00DACF8C /* Utile.swift */,
+				6B2918F4237C5528004EA408 /* MetaData.swift */,
 				35B78CCB2372935F000E5355 /* Managers */,
 				35B78CCA23729337000E5355 /* Screens */,
 				35B78CCE237293F1000E5355 /* Resources */,
@@ -254,6 +257,7 @@
 				6B8491BE233A5E7D00B9D281 /* AppPermissionManager.swift in Sources */,
 				35A04950233B113B00F768A6 /* InfoTableViewCell.swift in Sources */,
 				6BFBA4EE233A48CD00DDE80E /* AppDelegate.swift in Sources */,
+				6B2918F5237C5528004EA408 /* MetaData.swift in Sources */,
 				6BFBA508233A580400DDE80E /* PhotosCollectionViewController.swift in Sources */,
 				6BFBA502233A49D300DDE80E /* ExifInfoViewController.swift in Sources */,
 				6B8491BB233A5ADE00B9D281 /* AlbumsTableViewCell.swift in Sources */,
