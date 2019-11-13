@@ -1,0 +1,97 @@
+[   "{Exif}": {
+        ApertureValue = "8.918862690707352";
+        ColorSpace = 1;
+        ComponentsConfiguration = ( 1, 2, 3, 0 );
+        Contrast = 0;
+        CustomRendered = 0;
+        DateTimeDigitized = "2012:08:08 14:29:49";
+        DateTimeOriginal = "2012:08:08 14:29:49";
+        DigitalZoomRatio = 1;
+        ExifVersion = ( 2, 3 );
+        ExposureBiasValue = 0;
+        ExposureMode = 1;
+        ExposureProgram = 1;
+        ExposureTime = "0.8";
+        FNumber = 22;
+        FileSource = 3;
+        Flash = 16;
+        FlashPixVersion = ( 1, 0 );
+        FocalLenIn35mmFilm = 32;
+        FocalLength = 32;
+        FocalPlaneResolutionUnit = 4;
+        FocalPlaneXResolution = "204.840206185567";
+        FocalPlaneYResolution = "204.840206185567";
+        GainControl = 0;
+        ISOSpeedRatings =  ( 50 );
+        LightSource = 0;
+        MaxApertureValue = 4;
+        MeteringMode = 5;
+        PixelXDimension = 1668;
+        PixelYDimension = 2500;
+        Saturation = 0;
+        SceneCaptureType = 0;
+        SensingMethod = 2;
+        Sharpness = 0;
+        ShutterSpeedValue = "0.321927997619756";
+        SubjectDistRange = 0;
+        SubjectDistance = "1.33";
+        SubsecTimeDigitized = 8;
+        SubsecTimeOriginal = 8;
+        WhiteBalance = 0;
+    }, 
+    "DPIHeight": 72,
+    "DPIWidth": 72,
+    "{JFIF}": {
+        DensityUnit = 1;
+        JFIFVersion = ( 1, 0, 1 );
+        XDensity = 72;
+        YDensity = 72;
+    },
+    "ColorModel": RGB,
+    "{ExifAux}": {
+        ImageNumber = 10075;
+        LensID = 163;
+        LensInfo = ( 16, 35, 4, 4 );
+        LensModel = "16.0-35.0 mm f/4.0";
+        SerialNumber = 6001440;
+    }, 
+    "PixelWidth": 1668,
+    "{GPS}": {
+        Altitude = "182.3333333333333";
+        GPSVersion = ( 2, 3, 0, 0 );
+        ImgDirection = "116.3666997026759";
+        ImgDirectionRef = T;
+        Latitude = "64.752895";
+        LatitudeRef = N;
+        Longitude = "14.53861166666667";
+        LongitudeRef = W;
+        MapDatum = "WGS-84";
+        Speed = "0.8999988197665498";
+        SpeedRef = K;
+    }, 
+    "Depth": 8,
+    "ProfileName": sRGB IEC61966-2.1,
+    "{TIFF}": {
+        Artist = "Nicolas Cornet";
+        Copyright = "Nicolas Cornet";
+        DateTime = "2012:08:08 14:29:49";
+        Make = "NIKON CORPORATION";
+        Model = "NIKON D800E";
+        Orientation = 1;
+        ResolutionUnit = 2;
+        Software = "Aperture 3.4.5";
+        XResolution = 72;
+        YResolution = 72;
+    }, 
+    "Orientation": 1,
+    "PixelHeight": 2500,
+    "{IPTC}": {
+        Byline = ( "Nicolas Cornet" );
+        CopyrightNotice = "Nicolas Cornet";
+        DateCreated = 20120808;
+        DigitalCreationDate = 20120808;
+        DigitalCreationTime = 142949;
+        ObjectName = Berunes;
+        TimeCreated = 142949;
+    }
+]

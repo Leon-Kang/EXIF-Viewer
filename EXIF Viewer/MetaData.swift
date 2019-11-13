@@ -14,6 +14,7 @@ enum MetaDataRootKey: String {
     case tiff = "{TIFF}"
     case jfif = "{JFIF}"
     case iptc = "{IPTC}"
+    case exifAux = "{ExifAux}"
 }
 
 public struct MetaData {
