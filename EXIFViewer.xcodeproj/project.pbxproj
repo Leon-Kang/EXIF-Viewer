@@ -32,7 +32,6 @@
 /* Begin PBXFileReference section */
 		24C6CC979D11A39A3E129613 /* Pods-EXIFViewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EXIFViewer.release.xcconfig"; path = "Target Support Files/Pods-EXIFViewer/Pods-EXIFViewer.release.xcconfig"; sourceTree = "<group>"; };
 		3789B2BD0268D3EA632FE8C2 /* Pods-EXIFViewer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EXIFViewer.debug.xcconfig"; path = "Target Support Files/Pods-EXIFViewer/Pods-EXIFViewer.debug.xcconfig"; sourceTree = "<group>"; };
-		467D678DD47BC8343A83B2C4 /* Pods-EXIF Viewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EXIF Viewer.release.xcconfig"; path = "Target Support Files/Pods-EXIF Viewer/Pods-EXIF Viewer.release.xcconfig"; sourceTree = "<group>"; };
 		624E41CE2E3FA2D57FFCF4CE /* Pods_EXIFViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EXIFViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B954BC2237FFDB6004EBE9E /* MetaData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetaData.swift; sourceTree = "<group>"; };
 		6B954BC6237FFDB6004EBE9E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -55,7 +54,6 @@
 		6B954BDF237FFDB6004EBE9E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B954BE0237FFDB6004EBE9E /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		6BFBA4EA233A48CD00DDE80E /* EXIFViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EXIFViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA92AF633464551C0CDF0979 /* Pods-EXIF Viewer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EXIF Viewer.debug.xcconfig"; path = "Target Support Files/Pods-EXIF Viewer/Pods-EXIF Viewer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,12 +71,18 @@
 		082481A1485DF5653CA83300 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				CA92AF633464551C0CDF0979 /* Pods-EXIF Viewer.debug.xcconfig */,
-				467D678DD47BC8343A83B2C4 /* Pods-EXIF Viewer.release.xcconfig */,
 				3789B2BD0268D3EA632FE8C2 /* Pods-EXIFViewer.debug.xcconfig */,
 				24C6CC979D11A39A3E129613 /* Pods-EXIFViewer.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		6B65F54E23800056000F8EFC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6B954BD2237FFDB6004EBE9E /* InfoTableViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		6B954BC1237FFDB6004EBE9E /* EXIFViewer */ = {
@@ -138,8 +142,8 @@
 		6B954BD1237FFDB6004EBE9E /* ExifInfo */ = {
 			isa = PBXGroup;
 			children = (
-				6B954BD2237FFDB6004EBE9E /* InfoTableViewCell.swift */,
 				6B954BD3237FFDB6004EBE9E /* ExifInfoViewController.swift */,
+				6B65F54E23800056000F8EFC /* View */,
 			);
 			path = ExifInfo;
 			sourceTree = "<group>";
