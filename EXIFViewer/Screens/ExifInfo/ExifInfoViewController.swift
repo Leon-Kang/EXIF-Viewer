@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import MBProgressHUD
 
 public let kInfoViewControllerIdentifier = "kInfoViewControllerIdentifier"
 
@@ -90,6 +91,7 @@ class ExifInfoViewController: UIViewController {
 extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func getFullSizeAsset(asset: PHAsset) {
+        MBProgressHUD.showAdded(to: view, animated: true)
         metaDataManager.getOrientationMetaData { result in
             self.dataSource = flattenDictionary(dic: result)
             let sorted = self.dataSource.sorted { (value1, value2) -> Bool in
@@ -99,7 +101,10 @@ extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationC
             for (key, value) in sorted {
                 self.dataSource[key] = value
             }
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                MBProgressHUD.hide(for: self.view, animated: true)
+                self.tableView.reloadData()
+            }
         }
     }
     

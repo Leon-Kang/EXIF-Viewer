@@ -5,6 +5,6 @@ target 'EXIFViewer' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
-  pod 'SVProgressHUD', '2.2.5'
+  pod 'MBProgressHUD', '~> 1.1.0'
 
 end
