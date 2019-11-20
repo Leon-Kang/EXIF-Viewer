@@ -63,8 +63,8 @@ class AlbumViewController: UIViewController {
         allPhotos = AssetManager.allPhotos()
         smartAlbums = AssetManager.smartAlbums()
         nonEmptySmartAlbums = AssetManager.nonEmptyAlbums()
-        userCollections = AssetManager.userColletions()
-        userAssetCollections = AssetManager.userAssetColletions()
+        userCollections = AssetManager.userCollections()
+        userAssetCollections = AssetManager.userAssetCollections()
     }
 }
 
@@ -199,7 +199,7 @@ extension AlbumViewController: PHPhotoLibraryChangeObserver {
         
         if let changeDetails = changeInstance.changeDetails(for: userCollections) {
             userCollections = changeDetails.fetchResultAfterChanges
-            userAssetCollections = AssetManager.userAssetColletions()
+            userAssetCollections = AssetManager.userAssetCollections()
         }
         
         DispatchQueue.main.async {

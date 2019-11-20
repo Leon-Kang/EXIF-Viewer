@@ -9,7 +9,7 @@
 import Foundation
 
 enum MetaDataRootKey: String {
-    case exif = "{EXIF}"
+    case exif = "{Exif}"
     case gps = "{GPS}"
     case tiff = "{TIFF}"
     case jfif = "{JFIF}"
@@ -18,5 +18,22 @@ enum MetaDataRootKey: String {
 }
 
 public struct MetaData {
-    
+    var exif: ExifInfo?
+
+    init(exif: ExifInfo) {
+        self.exif = exif
+    }
+
+    init(_ dictionary: Dictionary<String, Any>) {
+        if let dict = dictionary[MetaDataRootKey.exif.rawValue] as? [String : Any] {
+            do {
+                let exifInfo = try ExifInfo(dictionary: dict)
+                self.exif = exifInfo
+            } catch {
+                print(error.localizedDescription)
+            }
+        } else {
+            self.exif = nil
+        }
+    }
 }

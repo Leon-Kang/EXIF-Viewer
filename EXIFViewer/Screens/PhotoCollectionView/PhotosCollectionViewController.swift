@@ -158,11 +158,6 @@ class PhotosCollectionViewController: UICollectionViewController {
 
 // MARK: CollectionView
 extension PhotosCollectionViewController {
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == collectionView {
-            
-        }
-    }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row < fetchResult.count {

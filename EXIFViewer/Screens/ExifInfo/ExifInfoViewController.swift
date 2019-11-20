@@ -93,6 +93,7 @@ extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationC
     func getFullSizeAsset(asset: PHAsset) {
         MBProgressHUD.showAdded(to: view, animated: true)
         metaDataManager.getOrientationMetaData { result in
+            let data = MetaData(result)
             self.dataSource = flattenDictionary(dic: result)
             let sorted = self.dataSource.sorted { (value1, value2) -> Bool in
                 return value1.key < value2.key

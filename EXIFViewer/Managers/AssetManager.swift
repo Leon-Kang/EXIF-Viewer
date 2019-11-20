@@ -106,13 +106,13 @@ open class AssetManager {
         return result
     }
     
-    public static func userColletions() -> PHFetchResult<PHCollection> {
+    public static func userCollections() -> PHFetchResult<PHCollection> {
         return PHCollectionList.fetchTopLevelUserCollections(with: nil)
     }
     
-    public static func userAssetColletions() -> [PHAssetCollection] {
+    public static func userAssetCollections() -> [PHAssetCollection] {
         var result = [PHAssetCollection]()
-        let list = userColletions()
+        let list = userCollections()
         
         list.enumerateObjects { (collection, start, stop) in
             if let collection = collection as? PHAssetCollection {
