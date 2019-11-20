@@ -11,14 +11,14 @@ struct ExifInfo: Codable {
     var ComponentsConfiguration: [Int]?
     var Contrast: Int?
     var CustomRendered: Int?
-    var DateTimeDigitized: Date?
-    var DateTimeOriginal: Date?
+    var DateTimeDigitized: String?
+    var DateTimeOriginal: String?
     var DigitalZoomRatio: Int?
     var ExifVersion: [Int]?
     var ExposureBiasValue: Int?
     var ExposureMode: Int?
     var ExposureProgram: Int?
-    var ExposureTime: String?
+    var ExposureTime: Double?
     var FNumber: Int?
     var FileSource: Int?
     var Flash: Int?
@@ -26,8 +26,8 @@ struct ExifInfo: Codable {
     var FocalLenIn35mmFil: Int?
     var FocalLength: Int?
     var FocalPlaneResolutionUnit: Int?
-    var FocalPlaneXResolution: String?
-    var FocalPlaneYResolution: String?
+    var FocalPlaneXResolution: Float?
+    var FocalPlaneYResolution: Float?
     var GainControl: Int?
     var ISOSpeedRatings: [Int]?
     var LightSource: Int?
@@ -39,11 +39,11 @@ struct ExifInfo: Codable {
     var SceneCaptureType: Int?
     var SensingMethod: Int?
     var Sharpness: Int?
-    var ShutterSpeedValue: String?
+    var ShutterSpeedValue: Float?
     var SubjectDistRang: Int?
     var SubjectDistance: String?
     var SubsecTimeDigitize: Int?
-    var SubsecTimeOriginal: Int?
+    var SubsecTimeOriginal: String?
     var WhiteBalance: Int?
 
     enum CodingKeys: String, CodingKey {
@@ -88,9 +88,14 @@ struct ExifInfo: Codable {
         case WhiteBalance
     }
 
-    init(dictionary: [String: Any]) throws {
-        let data = try JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted)
-        let decoder = JSONDecoder()
-        self = try decoder.decode(ExifInfo.self, from: data)
+    init(dictionary: [String : Any]) {
+        let valid = JSONSerialization.isValidJSONObject(dictionary)
+        if valid {
+            let data = try! JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted)
+            let jsonStr = String(data: data, encoding: .utf8)
+            print("exif JSON: \(String(describing: jsonStr))")
+            let exif = try! JSONDecoder().decode(ExifInfo.self, from: data)
+            self = exif
+        }
     }
 }

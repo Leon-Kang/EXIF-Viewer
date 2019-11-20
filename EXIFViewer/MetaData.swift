@@ -26,12 +26,8 @@ public struct MetaData {
 
     init(_ dictionary: Dictionary<String, Any>) {
         if let dict = dictionary[MetaDataRootKey.exif.rawValue] as? [String : Any] {
-            do {
-                let exifInfo = try ExifInfo(dictionary: dict)
-                self.exif = exifInfo
-            } catch {
-                print(error.localizedDescription)
-            }
+            let exifInfo = ExifInfo(dictionary: dict)
+            self.exif = exifInfo
         } else {
             self.exif = nil
         }
