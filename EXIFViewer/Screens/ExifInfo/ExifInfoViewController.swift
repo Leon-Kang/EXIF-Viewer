@@ -94,14 +94,7 @@ extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationC
         MBProgressHUD.showAdded(to: view, animated: true)
         metaDataManager.getOrientationMetaData { result in
             let data = MetaData(result)
-            self.dataSource = flattenDictionary(dic: result)
-            let sorted = self.dataSource.sorted { (value1, value2) -> Bool in
-                return value1.key < value2.key
-            }
-            self.dataSource = Dictionary()
-            for (key, value) in sorted {
-                self.dataSource[key] = value
-            }
+            self.dataSource = result
             DispatchQueue.main.async {
                 MBProgressHUD.hide(for: self.view, animated: true)
                 self.tableView.reloadData()
@@ -134,8 +127,19 @@ extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationC
 }
 
 extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         return dataSource.count
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var count = 1
+        guard let value = dataSource[section] else {
+            return 0
+        }
+        if let result = value.value as? Dictionary<String, Any> {
+            count = result.count
+        }
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -164,18 +168,29 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard tableViewHeader.subviews.contains(imageView) else {
-            tableViewHeader.addSubview(imageView)
-            tableViewHeader.frame = CGRect(origin: CGPoint.zero, size: headerSize)
-            imageView.frame = CGRect(origin: CGPoint.zero, size: headerSize)
+        if section == 0 {
+            guard tableViewHeader.subviews.contains(imageView) else {
+                tableViewHeader.addSubview(imageView)
+                tableViewHeader.frame = CGRect(origin: CGPoint.zero, size: headerSize)
+                imageView.frame = CGRect(origin: CGPoint.zero, size: headerSize)
+                return tableViewHeader
+            }
+
             return tableViewHeader
         }
-
-        return tableViewHeader
+        return nil
     }
-    
+
+    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return dataSource[section]?.key
+    }
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return headerSize.height
+        var height = CGFloat.zero
+        if section == 0 {
+            height = headerSize.height
+        }
+        return height
     }
     
 }

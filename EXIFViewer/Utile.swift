@@ -19,3 +19,15 @@ extension UIStoryboard {
         return storyboard.instantiateViewController(withIdentifier: identifier)
     }
 }
+
+extension Dictionary {
+    subscript(i: Int) -> (key:Key, value:Value)? {
+        get {
+            if i <= self.count {
+                let result = self[index(startIndex, offsetBy: i)]
+                return result
+            }
+            return nil
+        }
+    }
+}
