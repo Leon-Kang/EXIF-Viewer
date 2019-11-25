@@ -19,7 +19,7 @@ struct ExifInfo: Codable {
     var ExposureMode: Int?
     var ExposureProgram: Int?
     var ExposureTime: Double?
-    var FNumber: Int?
+    var FNumber: Float?
     var FileSource: Int?
     var Flash: Int?
     var FlashPixVersion: [Int]?
@@ -41,7 +41,7 @@ struct ExifInfo: Codable {
     var Sharpness: Int?
     var ShutterSpeedValue: Float?
     var SubjectDistRang: Int?
-    var SubjectDistance: String?
+    var SubjectDistance: Float?
     var SubsecTimeDigitize: Int?
     var SubsecTimeOriginal: String?
     var WhiteBalance: Int?
