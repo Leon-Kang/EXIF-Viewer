@@ -67,8 +67,6 @@ class ExifInfoViewController: UIViewController {
         PHPhotoLibrary.shared().register(self)
     }
     
-    
-    
     func updateUI() {
         self.imageView.image = image
         self.tableView.reloadData()
@@ -149,15 +147,24 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let row = indexPath.row
         if row < dataSource.count {
-            let keys = Array(dataSource.keys)
-            let key = keys[row]
+            let values = dataSource[indexPath.section]
+            var key = values?.key
+            var value = values?.value
+            if let result = value as? Dictionary<String, Any> {
+                let keys = Array(result.keys)
+                key = keys[row]
+                value = result[key ?? ""]
+            } else {
+                key = values?.key
+                value = values?.value
+            }
+
             cell?.titleLabel.text = key
             cell?.titleLabel.sizeToFit()
-            if let value = dataSource[key] {
-                cell?.valueLabel.text = "\(value)"
-                cell?.valueLabel.numberOfLines = 0
-                cell?.valueLabel.sizeToFit()
-            }
+            
+            cell?.valueLabel.text = "\(value)"
+            cell?.valueLabel.numberOfLines = 0
+            cell?.valueLabel.sizeToFit()
             
         }
         return cell!
