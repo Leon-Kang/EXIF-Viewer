@@ -30,6 +30,7 @@ public struct MetaData {
     var metaDataDictionary: [String: [String: Any]]
 
     var exif: ExifInfo?
+    var GPS: GPSInfo?
 
     init(exif: ExifInfo) {
         self.exif = exif
@@ -47,6 +48,8 @@ public struct MetaData {
         }
         if let gps = dictionary[MetaDataRootKey.gps.rawValue] as? [String : Any] {
             self.gpsDictionary = gps
+            let gpsInfo = GPSInfo(gps)
+            self.GPS = gpsInfo
             self.metaDataDictionary["GPS"] = gps
         }
         if let tiff = dictionary[MetaDataRootKey.tiff.rawValue] as? [String : Any] {

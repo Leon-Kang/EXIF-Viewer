@@ -142,18 +142,15 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
         if cell == nil {
             cell = InfoTableViewCell(style: .default, reuseIdentifier: "kCellIdentifier")
         }
-        let row = indexPath.row
-        if row < dataSource.count {
-            let values = dataSource[indexPath.section]
+        let section = indexPath.section
+        if section < dataSource.count {
+            let values = dataSource[section]
             var key = values?.key
             var value = values?.value
             if let result = value as? Dictionary<String, Any> {
                 let keys = Array(result.keys)
-                key = keys[row]
+                key = keys[indexPath.row]
                 value = result[key ?? ""]
-            } else {
-                key = values?.key
-                value = values?.value
             }
 
             cell?.titleLabel.text = key ?? ""
