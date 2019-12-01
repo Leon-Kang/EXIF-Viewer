@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="n21-6N-Zxr">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -27,7 +27,7 @@
         <!--Photos Collection View Controller-->
         <scene sceneID="8WT-TR-4Hm">
             <objects>
-                <collectionViewController storyboardIdentifier="kPhotosCollectionViewIdentifier" useStoryboardIdentifierAsRestorationIdentifier="YES" id="REy-lU-Sb5" customClass="PhotosCollectionViewController" customModule="EXIF_Viewer" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="kPhotosCollectionViewIdentifier" useStoryboardIdentifierAsRestorationIdentifier="YES" id="REy-lU-Sb5" customClass="PhotosCollectionViewController" customModule="EXIFViewer" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" id="5ql-kD-rZL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -62,7 +62,7 @@
         <!--Album View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="AlbumViewController" customModule="EXIF_Viewer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="AlbumViewController" customModule="EXIFViewer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -102,7 +102,7 @@
         <!--Exif Info View Controller-->
         <scene sceneID="NV8-rf-Cmz">
             <objects>
-                <viewController storyboardIdentifier="kInfoViewControllerIdentifier" useStoryboardIdentifierAsRestorationIdentifier="YES" id="j0L-d5-oXS" customClass="ExifInfoViewController" customModule="EXIF_Viewer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="kInfoViewControllerIdentifier" useStoryboardIdentifierAsRestorationIdentifier="YES" id="j0L-d5-oXS" customClass="ExifInfoViewController" customModule="EXIFViewer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="d7c-pg-gXH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -111,7 +111,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="kCellIdentifier" rowHeight="101" id="zyg-UD-S2z" customClass="InfoTableViewCell" customModule="EXIF_Viewer" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="kCellIdentifier" rowHeight="101" id="zyg-UD-S2z" customClass="InfoTableViewCell" customModule="EXIFViewer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="55.5" width="414" height="101"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zyg-UD-S2z" id="aYS-xL-KaW">
@@ -185,7 +185,7 @@
         <!--Primary Split View Controller-->
         <scene sceneID="hSv-qC-2gY">
             <objects>
-                <splitViewController id="n21-6N-Zxr" customClass="PrimarySplitViewController" customModule="EXIF_Viewer" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController id="n21-6N-Zxr" customClass="PrimarySplitViewController" customModule="EXIFViewer" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="UUu-Et-C8A" kind="relationship" relationship="masterViewController" id="2y9-QD-YpG"/>
                         <segue destination="LJk-Q7-nZw" kind="relationship" relationship="detailViewController" id="gsl-Wd-FrQ"/>

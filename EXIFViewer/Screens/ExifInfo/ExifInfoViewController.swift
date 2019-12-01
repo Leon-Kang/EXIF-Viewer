@@ -9,6 +9,8 @@
 import UIKit
 import Photos
 import MBProgressHUD
+import CoreLocation
+import MapKit
 
 public let kInfoViewControllerIdentifier = "kInfoViewControllerIdentifier"
 
@@ -19,6 +21,7 @@ class ExifInfoViewController: UIViewController {
 
     lazy var metaDataManager: MetaDataManager = MetaDataManager(asset: asset)
     var dataSource = [String: Any]()
+    var metaData: MetaData?
     
     public var image: UIImage? {
         didSet {
@@ -55,6 +58,15 @@ class ExifInfoViewController: UIViewController {
     
     private let imagePicker: UIImagePickerController = UIImagePickerController()
     
+    fileprivate let mapFrame = CGRect(x: 0, y: 0, width: kScreenWidth, height: 156)
+    
+    let mapViewHeader = UIView()
+    private lazy var mapView: MKMapView = {
+        let map = MKMapView(frame: mapFrame)
+        map.delegate = self
+        return map
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -70,6 +82,21 @@ class ExifInfoViewController: UIViewController {
     func updateUI() {
         self.imageView.image = image
         self.tableView.reloadData()
+    }
+    
+    func updateMapView() {
+        if let coordinate = self.metaData?.location?.coordinate {
+            let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
+            mapView.setRegion(region, animated: true)
+            
+            let restaurantAnnotation = MKPointAnnotation()
+            restaurantAnnotation.coordinate = coordinate;
+//            restaurantAnnotation.title = "address";
+            mapView.addAnnotation(restaurantAnnotation)
+            
+            let circle = MKCircle(center: coordinate, radius: 30)
+            mapView.addOverlay(circle)
+        }
     }
     
     @IBAction func openPhotoLib(_ sender: Any) {
@@ -92,6 +119,7 @@ extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationC
         MBProgressHUD.showAdded(to: view, animated: true)
         metaDataManager.getOrientationMetaData { result in
             let data = MetaData(result)
+            self.metaData = data
             self.dataSource = data.metaDataDictionary
             DispatchQueue.main.async {
                 MBProgressHUD.hide(for: self.view, animated: true)
@@ -178,6 +206,17 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
             }
 
             return tableViewHeader
+        } else if section == 1 {
+            guard mapViewHeader.subviews.contains(mapView) else {
+                mapViewHeader.addSubview(mapView)
+                mapViewHeader.frame = mapFrame
+                updateMapView()
+                return mapViewHeader
+            }
+            DispatchQueue.main.async {
+                self.updateMapView()
+            }
+            return mapViewHeader
         }
         return nil
     }
@@ -190,6 +229,8 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
         var height = CGFloat.zero
         if section == 0 {
             height = headerSize.height
+        } else if section == 1 {
+            height = mapFrame.height
         }
         return height
     }
@@ -249,5 +290,29 @@ extension ExifInfoViewController: PHPhotoLibraryChangeObserver {
                 self.updateUI()
             }
         }
+    }
+}
+
+extension ExifInfoViewController: MKMapViewDelegate {
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        let annaotationId = "annaotationId"
+//        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annaotationId)
+//        if annotationView == nil {
+//            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: annaotationId)
+//        }
+//        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+//        button.layer.cornerRadius = 5
+//        button.backgroundColor = UIColor.blue
+//        annotationView?.frame = CGRect(x: 0, y: 0, width: 15, height: 15)
+//        annotationView?.layer.cornerRadius = 7.5
+//        annotationView?.canShowCallout = true
+//        return annotationView
+//    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let circleRenderer = MKCircleRenderer(overlay: overlay)
+        circleRenderer.strokeColor = UIColor.red
+        circleRenderer.lineWidth = 1.0
+        return circleRenderer
     }
 }

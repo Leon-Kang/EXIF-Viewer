@@ -6,16 +6,34 @@
 import Foundation
 
 struct GPSInfo: Codable {
-    var latitude: Float = 0
-    var longitude: Float = 0
-    var altitude: Float = 0
-//    var GPSVersion: String?
+    var latitude: Double?
+    var longitude: Double?
+    var altitude: Double?
+    var latitudeRef: String?
+    var longitudeRef: String?
+    var imgDirection: Double?
+    var imgDirectionRef: String?
+    
+    var speed: Double?
+    var speedRef: String?
+    
+    var MapDatum: String?
+    var GPSVersion: Array<Int>?
 
     enum CodingKeys: String, CodingKey {
         case latitude = "Latitude"
         case longitude = "Longitude"
         case altitude = "Altitude"
-//        case GPSVersion
+        case imgDirection = "ImgDirection"
+        case imgDirectionRef = "ImgDirectionRef"
+        case latitudeRef = "LatitudeRef"
+        case longitudeRef = "LongitudeRef"
+        
+        case speed = "Speed"
+        case speedRef = "SpeedRef"
+        
+        case GPSVersion
+        case MapDatum
     }
 
     init(_ dictionary: [String : Any]) {

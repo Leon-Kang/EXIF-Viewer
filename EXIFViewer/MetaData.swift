@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 enum MetaDataRootKey: String {
     case exif = "{Exif}"
@@ -31,6 +32,7 @@ public struct MetaData {
 
     var exif: ExifInfo?
     var GPS: GPSInfo?
+    var location: CLLocation?
 
     init(exif: ExifInfo) {
         self.exif = exif
@@ -51,6 +53,19 @@ public struct MetaData {
             let gpsInfo = GPSInfo(gps)
             self.GPS = gpsInfo
             self.metaDataDictionary["GPS"] = gps
+            
+            var date = Date()
+            let dateFormmatter = DateFormatter()
+            dateFormmatter.dateFormat = "yyyy:MM:dd HH:mm:ss"
+            if let dateStr = self.exif?.DateTimeOriginal {
+                date = dateFormmatter.date(from: dateStr)!
+            }
+            
+            if let lat = GPS?.latitude, let lon = GPS?.longitude, let latRef = GPS?.latitudeRef, let lonRef = GPS?.longitudeRef {
+                
+                self.location = CLLocation(latitude: latRef == "N" ? lat : -lat, longitude: lonRef == "E" ? lon : -lon)
+            }
+            
         }
         if let tiff = dictionary[MetaDataRootKey.tiff.rawValue] as? [String : Any] {
             self.tiffDictionary = tiff
