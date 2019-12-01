@@ -92,7 +92,7 @@ extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationC
         MBProgressHUD.showAdded(to: view, animated: true)
         metaDataManager.getOrientationMetaData { result in
             let data = MetaData(result)
-            self.dataSource = result
+            self.dataSource = data.metaDataDictionary
             DispatchQueue.main.async {
                 MBProgressHUD.hide(for: self.view, animated: true)
                 self.tableView.reloadData()
@@ -130,12 +130,9 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count = 1
-        guard let value = dataSource[section] else {
-            return 0
-        }
-        if let result = value.value as? Dictionary<String, Any> {
-            count = result.count
+        var count = 0
+        if let result = dataSource[section]?.value as? Dictionary<String, Any> {
+            count = result.keys.count
         }
         return count
     }
@@ -159,10 +156,10 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
                 value = values?.value
             }
 
-            cell?.titleLabel.text = key
+            cell?.titleLabel.text = key ?? ""
             cell?.titleLabel.sizeToFit()
             
-            cell?.valueLabel.text = "\(value)"
+            cell?.valueLabel.text = "\(value ?? "")"
             cell?.valueLabel.numberOfLines = 0
             cell?.valueLabel.sizeToFit()
             

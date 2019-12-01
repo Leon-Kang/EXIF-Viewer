@@ -18,18 +18,54 @@ enum MetaDataRootKey: String {
 }
 
 public struct MetaData {
+    var sourceData: [String: Any]?
+    var exifDictionary: [String: Any]?
+    var gpsDictionary: [String: Any]?
+    var tiffDictionary: [String: Any]?
+    var jfifDictionary: [String: Any]?
+    var iptcDictionary: [String: Any]?
+    var auxDictionary: [String: Any]?
+    var commonDictionary: [String: Any]?
+
+    var metaDataDictionary: [String: [String: Any]]
+
     var exif: ExifInfo?
 
     init(exif: ExifInfo) {
         self.exif = exif
+        self.metaDataDictionary = [String: [String: Any]]()
     }
 
     init(_ dictionary: Dictionary<String, Any>) {
-        if let dict = dictionary[MetaDataRootKey.exif.rawValue] as? [String : Any] {
-            let exifInfo = ExifInfo(dictionary: dict)
+        self.sourceData = dictionary
+        self.metaDataDictionary = [String: [String: Any]]()
+        if let exif = dictionary[MetaDataRootKey.exif.rawValue] as? [String : Any] {
+            self.exifDictionary = exif
+            self.metaDataDictionary["EXIF"] = exif
+            let exifInfo = ExifInfo(dictionary: exif)
             self.exif = exifInfo
-        } else {
-            self.exif = nil
         }
+        if let gps = dictionary[MetaDataRootKey.gps.rawValue] as? [String : Any] {
+            self.gpsDictionary = gps
+            self.metaDataDictionary["GPS"] = gps
+        }
+        if let tiff = dictionary[MetaDataRootKey.tiff.rawValue] as? [String : Any] {
+            self.tiffDictionary = tiff
+            self.metaDataDictionary["TIFF"] = tiff
+        }
+        if let jfif = dictionary[MetaDataRootKey.jfif.rawValue] as? [String : Any] {
+            self.jfifDictionary = jfif
+            self.metaDataDictionary["JFIF"] = jfif
+        }
+        if let iptc = dictionary[MetaDataRootKey.iptc.rawValue] as? [String : Any] {
+            self.iptcDictionary = iptc
+            self.metaDataDictionary["IPTC"] = iptc
+        }
+        if let aux = dictionary[MetaDataRootKey.exifAux.rawValue] as? [String : Any] {
+            self.auxDictionary = aux
+            self.metaDataDictionary["EXIF AUX"] = aux
+        }
+        self.commonDictionary = self.sourceData?.filter { key, value in value is String }
+        self.metaDataDictionary["Common"] = self.commonDictionary
     }
 }
