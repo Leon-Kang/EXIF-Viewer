@@ -18,6 +18,28 @@ enum MetaDataRootKey: String {
     case exifAux = "{ExifAux}"
 }
 
+struct BaseInfo {
+    var DPIHeight: Int?
+    var DPIWidth: Int?
+    var colorModel: String?
+    var pixelWidth: Float?
+    var pixelHeight: Float?
+    var depth: Float?
+    var profileName: String?
+    var orientation: Int?
+    
+    init(_ dictionary: Dictionary<String, Any>) {
+        self.pixelWidth = dictionary["PixelWidth"] as? Float
+        self.pixelHeight = dictionary["PixelHeight"] as? Float
+        self.orientation = dictionary["Orientation"] as? Int
+        self.depth = dictionary["Depth"] as? Float
+        self.profileName = dictionary["ProfileName"] as? String
+        self.colorModel = dictionary["ColorModel"] as? String
+        self.DPIWidth = dictionary["DPIWidth"] as? Int
+        self.DPIHeight = dictionary["DPIHeight"] as? Int
+    }
+}
+
 public struct MetaData {
     var sourceData: [String: Any]?
     var exifDictionary: [String: Any]?
@@ -33,11 +55,8 @@ public struct MetaData {
     var exif: ExifInfo?
     var GPS: GPSInfo?
     var location: CLLocation?
-
-    init(exif: ExifInfo) {
-        self.exif = exif
-        self.metaDataDictionary = [String: [String: Any]]()
-    }
+    
+    var baseInfo: BaseInfo?
 
     init(_ dictionary: Dictionary<String, Any>) {
         self.sourceData = dictionary
@@ -83,7 +102,10 @@ public struct MetaData {
             self.auxDictionary = aux
             self.metaDataDictionary["EXIF AUX"] = aux
         }
-        self.commonDictionary = self.sourceData?.filter { key, value in value is String }
+        self.commonDictionary = self.sourceData?.filter { key, value in !(value is Dictionary<String, Any>) }
         self.metaDataDictionary["Common"] = self.commonDictionary
+        if let common = commonDictionary {
+            self.baseInfo = BaseInfo(common)
+        }
     }
 }

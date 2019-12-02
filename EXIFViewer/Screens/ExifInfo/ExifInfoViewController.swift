@@ -309,10 +309,10 @@ extension ExifInfoViewController: MKMapViewDelegate {
 //        return annotationView
 //    }
     
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let circleRenderer = MKCircleRenderer(overlay: overlay)
-        circleRenderer.strokeColor = UIColor.red
-        circleRenderer.lineWidth = 1.0
-        return circleRenderer
-    }
+//    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+//        let circleRenderer = MKCircleRenderer(overlay: overlay)
+//        circleRenderer.strokeColor = UIColor.red
+//        circleRenderer.lineWidth = 1.0
+//        return circleRenderer
+//    }
 }
