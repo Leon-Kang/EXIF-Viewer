@@ -61,7 +61,8 @@ class PhotosCollectionViewController: UICollectionViewController {
         super.viewWillAppear(animated)
         
         let scale = UIScreen.main.scale
-        let cellSize = (collectionViewLayout as! UICollectionViewFlowLayout).itemSize
+        let cellWidth = kScreenWidth / 4 - 8
+        let cellSize = CGSize(width: cellWidth, height: cellWidth)
         photoSize = CGSize(width: cellSize.width * scale, height: cellSize.height * scale)
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -211,21 +212,10 @@ extension PhotosCollectionViewController {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 8, left: 16, bottom: 16, right: 16)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return cellSizeDictionary[cellSizeStyle]!
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize.zero
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return cellItemSpacing[cellSizeStyle]!
-    }
 }
 
 
