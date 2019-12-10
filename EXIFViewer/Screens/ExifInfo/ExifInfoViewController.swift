@@ -159,8 +159,9 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
-        if let result = dataSource[section]?.value as? Dictionary<String, Any> {
-            count = result.keys.count
+        let result = dataSource.sorted{ $0.key < $1.key }[section]
+        if let value = result.value as? Dictionary<String, Any> {
+            count = value.keys.count
         }
         return count
     }
@@ -172,19 +173,19 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let section = indexPath.section
         if section < dataSource.count {
-            let values = dataSource[section]
-            var key = values?.key
-            var value = values?.value
+            let values = dataSource.sorted{ $0.key < $1.key }[section]
+            var key = values.key
+            var value = values.value
             if let result = value as? Dictionary<String, Any> {
                 let keys = Array(result.keys)
                 key = keys[indexPath.row]
-                value = result[key ?? ""]
+                value = result[key] ?? ""
             }
 
-            cell?.titleLabel.text = key ?? ""
+            cell?.titleLabel.text = key
             cell?.titleLabel.sizeToFit()
             
-            cell?.valueLabel.text = "\(value ?? "")"
+            cell?.valueLabel.text = "\(value)"
             cell?.valueLabel.numberOfLines = 0
             cell?.valueLabel.sizeToFit()
             
