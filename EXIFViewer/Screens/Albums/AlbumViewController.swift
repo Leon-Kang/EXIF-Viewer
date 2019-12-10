@@ -173,12 +173,8 @@ extension AlbumViewController: UITableViewDelegate, UITableViewDataSource {
         return count
     }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 124
-    }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 124
+        return 72
     }
     
 }
