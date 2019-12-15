@@ -22,6 +22,7 @@ class ExifInfoViewController: UIViewController {
     lazy var metaDataManager: MetaDataManager = MetaDataManager(asset: asset)
     var dataSource = [String: Any]()
     var metaData: MetaData?
+    var sortedKeys = [String]()
     
     public var image: UIImage? {
         didSet {
@@ -121,6 +122,7 @@ extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationC
             let data = MetaData(result)
             self.metaData = data
             self.dataSource = data.metaDataDictionary
+            self.sortedKeys = data.sortedKeys ?? []
             DispatchQueue.main.async {
                 MBProgressHUD.hide(for: self.view, animated: true)
                 self.tableView.reloadData()
@@ -154,14 +156,17 @@ extension ExifInfoViewController: UIImagePickerControllerDelegate, UINavigationC
 
 extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
     public func numberOfSections(in tableView: UITableView) -> Int {
-        return dataSource.count
+        return self.sortedKeys.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
-        let result = dataSource.sorted{ $0.key < $1.key }[section]
-        if let value = result.value as? Dictionary<String, Any> {
-            count = value.keys.count
+        if section < self.sortedKeys.count {
+            let key = self.sortedKeys[section]
+            let result = dataSource[key]
+            if let value = result as? Dictionary<String, Any> {
+                count = value.keys.count
+            }
         }
         return count
     }
@@ -172,11 +177,11 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
             cell = InfoTableViewCell(style: .default, reuseIdentifier: "kCellIdentifier")
         }
         let section = indexPath.section
-        if section < dataSource.count {
-            let values = dataSource.sorted{ $0.key < $1.key }[section]
-            var key = values.key
-            var value = values.value
-            if let result = value as? Dictionary<String, Any> {
+        if section < self.sortedKeys.count {
+            let subDictionary = dataSource[sortedKeys[section]]
+            var key: String = ""
+            var value: Any?
+            if let result = subDictionary as? Dictionary<String, Any> {
                 let keys = Array(result.keys)
                 key = keys[indexPath.row]
                 value = result[key] ?? ""
@@ -185,7 +190,7 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
             cell?.titleLabel.text = key
             cell?.titleLabel.sizeToFit()
             
-            cell?.valueLabel.text = "\(value)"
+            cell?.valueLabel.text = "\(value ?? "")"
             cell?.valueLabel.numberOfLines = 0
             cell?.valueLabel.sizeToFit()
             
@@ -223,7 +228,10 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return dataSource[section]?.key
+        if section < sortedKeys.count {
+            return sortedKeys[section]
+        }
+        return nil
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

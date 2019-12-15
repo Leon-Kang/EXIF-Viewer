@@ -57,13 +57,16 @@ public struct MetaData {
     var location: CLLocation?
     
     var baseInfo: BaseInfo?
+    
+    var sortedKeys: [String]?
 
     init(_ dictionary: Dictionary<String, Any>) {
         self.sourceData = dictionary
-        self.metaDataDictionary = [String: [String: Any]]()
+        
+        var metaDataDictionary = [String: [String: Any]]()
         if let exif = dictionary[MetaDataRootKey.exif.rawValue] as? [String : Any] {
             self.exifDictionary = exif
-            self.metaDataDictionary["EXIF"] = exif
+            metaDataDictionary["EXIF"] = exif
             let exifInfo = ExifInfo(dictionary: exif)
             self.exif = exifInfo
         }
@@ -71,7 +74,7 @@ public struct MetaData {
             self.gpsDictionary = gps
             let gpsInfo = GPSInfo(gps)
             self.GPS = gpsInfo
-            self.metaDataDictionary["GPS"] = gps
+            metaDataDictionary["GPS"] = gps
             
             var date = Date()
             let dateFormmatter = DateFormatter()
@@ -88,24 +91,26 @@ public struct MetaData {
         }
         if let tiff = dictionary[MetaDataRootKey.tiff.rawValue] as? [String : Any] {
             self.tiffDictionary = tiff
-            self.metaDataDictionary["TIFF"] = tiff
+            metaDataDictionary["TIFF"] = tiff
         }
         if let jfif = dictionary[MetaDataRootKey.jfif.rawValue] as? [String : Any] {
             self.jfifDictionary = jfif
-            self.metaDataDictionary["JFIF"] = jfif
+            metaDataDictionary["JFIF"] = jfif
         }
         if let iptc = dictionary[MetaDataRootKey.iptc.rawValue] as? [String : Any] {
             self.iptcDictionary = iptc
-            self.metaDataDictionary["IPTC"] = iptc
+            metaDataDictionary["IPTC"] = iptc
         }
         if let aux = dictionary[MetaDataRootKey.exifAux.rawValue] as? [String : Any] {
             self.auxDictionary = aux
-            self.metaDataDictionary["EXIF AUX"] = aux
+            metaDataDictionary["EXIF AUX"] = aux
         }
         self.commonDictionary = self.sourceData?.filter { key, value in !(value is Dictionary<String, Any>) }
-        self.metaDataDictionary["Common"] = self.commonDictionary
+//        self.metaDataDictionary["Common"] = self.commonDictionary
         if let common = commonDictionary {
             self.baseInfo = BaseInfo(common)
         }
+        self.sortedKeys = metaDataDictionary.keys.sorted()
+        self.metaDataDictionary = metaDataDictionary
     }
 }
