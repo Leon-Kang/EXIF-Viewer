@@ -16,6 +16,7 @@ public let kInfoViewControllerIdentifier = "kInfoViewControllerIdentifier"
 
 class ExifInfoViewController: UIViewController {
 
+    @IBOutlet var infoHeaderView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
 
@@ -204,13 +205,13 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
-            guard tableViewHeader.subviews.contains(imageView) else {
-                tableViewHeader.addSubview(imageView)
+            guard tableViewHeader.subviews.contains(infoHeaderView) else {
+                tableViewHeader.addSubview(infoHeaderView)
                 tableViewHeader.frame = CGRect(origin: CGPoint.zero, size: headerSize)
-                imageView.frame = CGRect(origin: CGPoint.zero, size: headerSize)
+                infoHeaderView.frame = CGRect(origin: CGPoint.zero, size: headerSize)
+                infoHeaderView.layoutIfNeeded()
                 return tableViewHeader
             }
-
             return tableViewHeader
         } else if section == 1 {
             guard mapViewHeader.subviews.contains(mapView) else {
