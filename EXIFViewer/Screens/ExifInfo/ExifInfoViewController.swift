@@ -19,10 +19,27 @@ class ExifInfoViewController: UIViewController {
     @IBOutlet var infoHeaderView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
-
+    @IBOutlet weak var sizeLabel: UILabel!
+    
+    @IBOutlet weak var infoContentView: UIView!
+    private lazy var gradientLayer: CAGradientLayer = {
+        let layer = CAGradientLayer()
+        layer.frame = self.infoContentView.bounds
+        layer.colors = [UIColor.black.withAlphaComponent(0.7).cgColor, UIColor.clear.cgColor]
+        layer.startPoint = CGPoint(x: 0.5, y: 1)
+        layer.endPoint = CGPoint(x: 0.5, y: 0)
+        return layer
+    }()
+    
     lazy var metaDataManager: MetaDataManager = MetaDataManager(asset: asset)
     var dataSource = [String: Any]()
-    var metaData: MetaData?
+    var metaData: MetaData? {
+        didSet {
+            if let meta = metaData, let width = meta.baseInfo?.pixelWidth, let height = meta.baseInfo?.pixelHeight {
+                sizeLabel.text = "\(Int(width)) x \(Int(height))"
+            }
+        }
+    }
     var sortedKeys = [String]()
     
     public var image: UIImage? {
@@ -69,6 +86,11 @@ class ExifInfoViewController: UIViewController {
         return map
     }()
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.gradientLayer.frame = self.infoContentView.bounds
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -78,12 +100,17 @@ class ExifInfoViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        setupUI()
         PHPhotoLibrary.shared().register(self)
     }
     
     func updateUI() {
         self.imageView.image = image
         self.tableView.reloadData()
+    }
+    
+    func setupUI() {
+        self.infoContentView.layer.addSublayer(self.gradientLayer)
     }
     
     func updateMapView() {
@@ -214,16 +241,16 @@ extension ExifInfoViewController: UITableViewDelegate, UITableViewDataSource {
             }
             return tableViewHeader
         } else if section == 1 {
-            guard mapViewHeader.subviews.contains(mapView) else {
-                mapViewHeader.addSubview(mapView)
-                mapViewHeader.frame = mapFrame
-                updateMapView()
-                return mapViewHeader
-            }
-            DispatchQueue.main.async {
-                self.updateMapView()
-            }
-            return mapViewHeader
+//            guard mapViewHeader.subviews.contains(mapView) else {
+//                mapViewHeader.addSubview(mapView)
+//                mapViewHeader.frame = mapFrame
+//                updateMapView()
+//                return mapViewHeader
+//            }
+//            DispatchQueue.main.async {
+//                self.updateMapView()
+//            }
+//            return mapViewHeader
         }
         return nil
     }
